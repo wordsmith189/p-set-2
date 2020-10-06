@@ -1,0 +1,142 @@
+---
+title: "P-Set 2"
+subtitle: "E 310 Intro to Digital Studies, Hinrichs"
+author: "Your Name"
+date: 10-06-2020
+output: html_notebook
+---
+
+## Setup
+
+The first code chunk loads our two standard packages. Make sure not to delete this chunk.
+
+```{r setup, message=FALSE}
+# This chunk is part of the quiz prompt.
+if(!require(pacman)){install.packages("pacman")}
+p_load(rio, tidyverse)
+```
+
+## Dataset 1: Austin Code Complaints
+
+The first dataset for this project is a record of more than 100,000 code compliance complaints received by the City of Austin. It's pretty current: the most recent entries are from this month.
+
+I found this data by using one of the strategies that Alyssa Guzmann presented to us, i.e. by going on [Google Dataset Search](https://datasetsearch.research.google.com/). The dataset has its own results page [here](https://datasetsearch.research.google.com/search?query=travis%20county%20texas%20&docid=eX%2FgsHllBkeSNlmLAAAAAA%3D%3D&filters=WyJbXCJmaWxlX2Zvcm1hdF9jbGFzc1wiLFtcIjFcIl1dIl0%3D&property=ZmlsZV9mb3JtYXRfY2xhc3M%3D).^[In the Rmd version of the file, this link is long and ugly. Notice how when you click Preview, it turns into a pretty hyperlink.]
+
+Here is the proper citation:
+
+> Austin Code Department. 2020. Austin Code Complaint Cases. opendataatx. https://doi.org/10.26000/011.000001.
+
+## Questions
+
+The number of points possible for each question is shown after the question label.
+
+#### Q1 (2)
+Load the data file `Austin_Code_Complaint_Cases.csv` into R by using the `import()` function (which is included in the `rio` package, loaded in the `setup` chunk above).^[Unlike what we did in some of the exercises, the file is not in a separete "data" directory, so to specify its location, it will be enough to just pass its name in double quotes to the `import()` function.]
+
+```{r}
+
+```
+
+In its current version, the dataset has column names that are all upper case, which is cumbersome to work with.
+
+```{r}
+# This chunk is part of the quiz prompt.
+df %>% colnames()
+```
+
+In the next chunk, which I am providing and you just need to execute,^[You can always manually execute a chunk by clicking on the Play button at the top right of the chunk. Alternatively, it will be executed any time you hit "Preview".] we apply the function `clean_names()` from the `janitor` package. It puts the column names into a nicer format than how they come.
+
+```{r}
+# This chunk is part of the quiz prompt.
+p_load(janitor)
+df <- df %>% 
+  clean_names()
+df %>% colnames()
+```
+
+That looks much better. Now let's continue looking at the dataset.
+
+#### Q2 (2)
+Write some code that produces output showing how many rows and columns are in the data.^[This question, as many of the ones in this quiz, has several possible correct answers.]
+
+```{r}
+
+```
+
+#### Q3 (2)
+In order to see the names and data types of all columns, pipe the dataset into the `glimpse()` function.
+
+```{r}
+df %>% glimpse()
+```
+
+#### Q4 (3)
+In order to get a sense of what's in some of the columns, use `count()` to see the values (and their frequencies) for the columns `case_type`, `zip_code` and `description`.^[If you'd like to use separate code chunks for these statements, you can easily insert new ones by clicking on "Insert" above, next to the "Preview" button.] 
+
+```{r}
+
+```
+
+
+#### Q5 (2)
+Write code that answers the question: which zip codes produce the most code complaints? The output should be a table, not a plot.
+
+```{r}
+
+```
+
+#### Q6 (3)
+Write code that will produce a barchart using `ggplot()` in which the height of each bar corresponds to the frequency of one of the levels in the `priority` column.^[Note: There is no need to sort the bars by their heights. Also, remember that there are two different `geom`s that produce bar charts in `ggplot()`: `geom_bar()` and `geom_col()`.]
+
+```{r}
+
+```
+
+## Dataset 2: Cities over 300,000
+
+In order to practice making histograms, I searched for data with a continuous variable at the center of it, such as population sizes. So I got this one.
+
+> Greater London Authority. Global City Population Estimates. 2018. https://data.gov.uk/dataset/128a0e7c-e51e-4fba-b743-289e2a8debdf/global-city-population-estimates.
+
+#### Q7 (2)
+Load the dataset "global-city-population-estimates.xls" as `df2` and apply the `clean_names()` as above, in the same pipeline that contains the `import()` function.^[Since `janitor` was loaded above, there is no need to load it again.] 
+
+```{r}
+df2 <- import("global-city-population-estimates.csv") %>% 
+  clean_names()
+```
+
+#### Q8 (4)
+Create a simple histogram with `ggplot()` of all population sizes in `df2.` Visualize only the year 2015. Make sure to adjust the bin size in a way that makes sense for this data. Underneath the code chunk, you can include a short statement justifying your choice of bin size.
+
+```{r}
+
+```
+
+
+#### Q9 (3)
+Filter `df2` so that it contains only cities in India, Pakistan,  Bangladesh, or the USA. Assign the output to a new variable name, `df3`. In the same pipeline, select just the columns for country, city code, and 2015 population size.
+
+```{r}
+
+```
+
+#### Q10 (4)
+Create a complex histograms of the population sizes in `df3` that shows one panel per country (i.e. it should show 4 panels). This panel should use the `facet_grid()` function as one of the layers of the `ggplot()` specification. See [this reading](https://e310d.netlify.app/posts/2020-09-25-plotsaggregationfunctions/). 
+
+#### Extra credit 1 (2)
+Show the code that changes the format of `df2` from wide to long. Again, see [this reading](https://e310d.netlify.app/posts/2020-09-25-plotsaggregationfunctions/). In order to make this change, ask yourself this question: in what way is the data untidy, i.e. what information is included in each row that should really be broken up into separate rows? 
+
+Don't create a new data object; instead, overwrite `df2`.
+
+```{r}
+
+```
+
+### Extra credit 2 (2)
+Having pivoted the format of `df2` from wide to long, produce a plot now that visualizes population sizes over time. Assign the year to the `x`-axis. It's up to you what specifically you want to put on the `y`-axis; there's a number of things you could do with `df2`. If you manage to produce a meaningful plot in response to this question, you'll all possible extra credit points.
+
+```{r}
+
+```
+
