@@ -133,7 +133,7 @@ Don't create a new data object; instead, overwrite `df2`.
 
 ```
 
-### Extra credit 2 (2)
+#### Extra credit 2 (2)
 Having pivoted the format of `df2` from wide to long, produce a plot now that visualizes population sizes over time. Assign the year to the `x`-axis. It's up to you what specifically you want to put on the `y`-axis; there's a number of things you could do with `df2`. If you manage to produce a meaningful plot in response to this question, you'll all possible extra credit points.
 
 ```{r}

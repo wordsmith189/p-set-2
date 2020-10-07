@@ -4,3 +4,4 @@ learning-R*.Rmd
 *fischer.Rmd
 *.Rproj
 .Rproj.user
+*Cases.csv
